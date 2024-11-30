@@ -60,32 +60,38 @@ int main(void) {
         if (nbcommandes == 1 &&
             strcmp(TabCommande[0], "exit") == 0) {
             return 0;
-        } else if (nbcommandes == 3 &&
+        }
+        if (nbcommandes == 3 &&
                    strcmp(TabCommande[0], "inscription") == 0) {
-            inscription(TabEtudiants, TabCommande, &IDEtudiants);
+            inscription(TabCommande, TabEtudiants, &IDEtudiants);
+
         } else if (nbcommandes == 4 &&
                    strcmp(TabCommande[0], "absence") == 0) {
-            absence(TabEtudiants, TabCommande, TabAbsence, IDEtudiants, &IDAbsence);
+            absence(TabCommande, TabEtudiants, IDEtudiants, TabAbsence, &IDAbsence);
+
         } else if (nbcommandes == 2 &&
                    strcmp(TabCommande[0], "etudiants") == 0) {
-            affichage_etudiant(TabEtudiants, TabCommande, IDEtudiants, TabAbsence, IDAbsence);
+            affichage_etudiant(TabCommande, TabEtudiants, IDEtudiants, TabAbsence, IDAbsence);
+
         } else if ((strcmp(TabCommande[0], "justificatif") == 0)) {
-            depos_justf(TabEtudiants, TabAbsence, IDAbsence, TabCommande, nbcommandes);
+            depos_justf(TabCommande, TabEtudiants, TabAbsence, IDAbsence, nbcommandes);
+
         } else if ((nbcommandes == 1 &&
                     strcmp(TabCommande[0], "validations") == 0)) {
-            validations(TabEtudiants, TabAbsence, IDEtudiants, IDAbsence, TabCommande);
+            validations(TabEtudiants, IDEtudiants, TabAbsence, IDAbsence);
+
         } else if (nbcommandes == 3 &&
                    strcmp(TabCommande[0], "validation") == 0) {
-            inv_validation(TabEtudiants, TabAbsence, IDEtudiants, IDAbsence, TabCommande);
+            inv_validation(TabCommande, TabEtudiants, IDEtudiants, TabAbsence, IDAbsence);
+
         } else if (nbcommandes == 3 &&
                    strcmp(TabCommande[0], "etudiant") == 0) {
-            situ_etudiant(TabEtudiants, TabAbsence, IDEtudiants, IDAbsence, TabCommande);
+            situ_etudiant(TabCommande, TabEtudiants, IDEtudiants, TabAbsence, IDAbsence);
+
         } else if (nbcommandes == 2 &&
                    strcmp(TabCommande[0], "defaillants") == 0) {
-            defaillant(TabEtudiants, TabAbsence, IDEtudiants, IDAbsence, TabCommande);
-        } else if (nbcommandes == 1 &&
-                   strcmp(TabCommande[0], "etu") == 0) {
-            affetu(TabEtudiants, IDEtudiants);
+            defaillant(TabCommande, TabEtudiants, IDEtudiants, TabAbsence, IDAbsence);
+
         } else {
             printf("La commande est incorrect ou n'existe pas.\n");
         }

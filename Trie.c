@@ -11,7 +11,6 @@ int comparer_etu(const void *etudiantA, const void *etudiantB) {
     } else if (etuA->Id > etuB->Id) {
         return 1;
     }
-    return 0;
 }
 
 int comparer_abs_chrono(const void *absA, const void *absB) {

@@ -11,7 +11,9 @@ void viderBuffer() {
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void inscription(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][TailleMaxCommande], unsigned int *IDEtudiants) {
+void inscription(const char TabCom[][TailleMaxCommande],
+                 ETUDIANTS Tabetu[NBEtudiantMax],
+                 unsigned int *IDEtudiants) {
     if (*IDEtudiants >= NBEtudiantMax) {
         // on verifie qu'on a encore de la place dans le tableau d'etudiants
         printf("Erreur, le nombre maximal d'etudiants a ete atteinds\n");
@@ -39,8 +41,11 @@ void inscription(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][TailleMaxC
     }
 }
 
-void absence(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][TailleMaxCommande], ABSENCE TabAbs[NBMaxAbsence],
-             const unsigned int IDEtudiants, unsigned int *IDAbsence) {
+void absence(const char TabCom[][TailleMaxCommande],
+             ETUDIANTS Tabetu[NBEtudiantMax],
+             unsigned int IDEtudiants,
+             ABSENCE TabAbs[NBMaxAbsence],
+             unsigned int *IDAbsence) {
     if (atoi(TabCom[1]) <= IDEtudiants && atoi(TabCom[1]) > 0) {
         if (atoi(TabCom[2]) > NumJourMin && atoi(TabCom[2]) <= NumJourMax) {
             // verification que l'absence est comprise dans le semestre
@@ -82,9 +87,11 @@ void absence(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][TailleMaxComma
     }
 }
 
-void affichage_etudiant(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][TailleMaxCommande],
-                        const unsigned int IDEtudiants, const ABSENCE TabAbs[NBMaxAbsence],
-                        const unsigned int IDAbsence) {
+void affichage_etudiant(const char TabCom[][TailleMaxCommande],
+                        ETUDIANTS Tabetu[NBEtudiantMax],
+                        unsigned int IDEtudiants,
+                        ABSENCE TabAbs[NBMaxAbsence],
+                        unsigned int IDAbsence) {
     if (IDEtudiants == 1) {
         // on verifie qu'il y a des etudiants inscrits
         printf("Aucun inscrit\n");
@@ -110,8 +117,11 @@ void affichage_etudiant(ETUDIANTS Tabetu[NBEtudiantMax], const char TabCom[][Tai
     }
 }
 
-void depos_justf(const ETUDIANTS Tabetu[NBEtudiantMax], ABSENCE TabAbs[NBMaxAbsence], const unsigned int IDAbsence,
-                 const char TabCom[][TailleMaxCommande], const int nbcommandes) {
+void depos_justf(const char TabCom[][TailleMaxCommande],
+                 const ETUDIANTS Tabetu[NBEtudiantMax],
+                 ABSENCE TabAbs[NBMaxAbsence],
+                 unsigned int IDAbsence,
+                 int nbcommandes) {
     if (atoi(TabCom[1]) < IDAbsence && atoi(TabCom[1]) > 0) {
         for (int i = 0; i <= IDAbsence; i++) {
             if ((TabAbs[i].Id == atoi(TabCom[1])) && (TabAbs[i].Date <= atoi(TabCom[2]))) {
@@ -159,9 +169,10 @@ void depos_justf(const ETUDIANTS Tabetu[NBEtudiantMax], ABSENCE TabAbs[NBMaxAbse
     }
 }
 
-void validations(const ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[NBMaxAbsence],
-                 const unsigned int IDEtudiants,
-                 const unsigned int IDAbsence, const char TabCom[][TailleMaxCommande]) {
+void validations(const ETUDIANTS Tabetu[NBEtudiantMax],
+                 unsigned int IDEtudiants,
+                 const ABSENCE TabAbs[NBMaxAbsence],
+                 unsigned int IDAbsence) {
     qsort(Tabetu, IDEtudiants, sizeof(ETUDIANTS), comparer_etu);
     // trie la table etudiants de facon croissante d'identificateur
     qsort(TabAbs, IDAbsence, sizeof(ABSENCE), comparer_abs_chrono);
@@ -186,8 +197,11 @@ void validations(const ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[NBM
 }
 
 
-void inv_validation(const ETUDIANTS Tabetu[NBEtudiantMax], ABSENCE TabAbs[NBMaxAbsence], const unsigned int IDEtudiants,
-                    const unsigned int IDAbsence, const char TabCom[][TailleMaxCommande]) {
+void inv_validation(const char TabCom[][TailleMaxCommande],
+                    const ETUDIANTS Tabetu[NBEtudiantMax],
+                    unsigned int IDEtudiants,
+                    ABSENCE TabAbs[NBMaxAbsence],
+                    unsigned int IDAbsence) {
     if (atoi(TabCom[1]) < IDAbsence && atoi(TabCom[1]) > 0) {
         for (int i = 0; i < IDEtudiants; i++) {
             for (int j = 0; j < IDAbsence; j++) {
@@ -217,9 +231,11 @@ void inv_validation(const ETUDIANTS Tabetu[NBEtudiantMax], ABSENCE TabAbs[NBMaxA
     }
 }
 
-void situ_etudiant(const ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[NBMaxAbsence],
-                   const unsigned int IDEtudiants,
-                   const unsigned int IDAbsence, const char TabCom[][TailleMaxCommande]) {
+void situ_etudiant(const char TabCom[][TailleMaxCommande],
+                   const ETUDIANTS Tabetu[NBEtudiantMax],
+                   unsigned int IDEtudiants,
+                   const ABSENCE TabAbs[NBMaxAbsence],
+                   unsigned int IDAbsence) {
     if (atoi(TabCom[1]) < IDEtudiants && atoi(TabCom[1]) > 0) {
         if (atoi(TabCom[2]) >= 1) {
             qsort(Tabetu, IDEtudiants, sizeof(ETUDIANTS), comparer_etu_groupe);
@@ -234,37 +250,36 @@ void situ_etudiant(const ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[N
             for (int i = 0; i < IDEtudiants; i++) {
                 for (int j = 0; j < IDAbsence; j++) {
                     if (TabAbs[j].IdEtudiant == Tabetu[i].Id && Tabetu[i].Id == atoi(TabCom[1]))
-                    if (Tabetu[i].Id == TabAbs[j].IdEtudiant
-                        && Tabetu[i].Id == atoi(TabCom[1]))
-                        {
-                        idetudiants = i;
-                        if (TabAbs[j].Etat == Justif
-                            && TabAbs[j].Justifier == OK
-                            && TabAbs[j].DateJustif <= atoi(TabCom[2])
-                            && TabAbs[j].DateJustif != 0
-                            && TabAbs[j].Date <= atoi(TabCom[2])) {
-                            tabsabs[Justif][idabsjustif] = j;
-                            idabsjustif++;
-                        } else if (TabAbs[j].Etat == EnAttenteTraitement
-                                   && TabAbs[j].DateJustif <= atoi(TabCom[2])
-                                   && TabAbs[j].DateJustif != 0
-                                   && TabAbs[j].Date <= atoi(TabCom[2])) {
-                            tabsabs[EnAttenteTraitement][idabsatttrait] = j;
-                            idabsatttrait++;
-                        } else if (TabAbs[j].Date + NBJourJustifMax >= atoi(TabCom[2])
-                                    && (TabAbs[j].DateJustif > atoi(TabCom[2])
-                                        || TabAbs[j].DateJustif == 0)
-                                    && TabAbs[j].Date <= atoi(TabCom[2])) {
-                            tabsabs[EnAttenteJustif][idabsattjustif] = j;
-                            idabsattjustif++;
-                        } else if ((TabAbs[j].Etat == NonJustif
-                                   || TabAbs[j].Date + NBJourJustifMax < atoi(TabCom[2])
-                                   || TabAbs[j].Justifier == KO)
-                                   && TabAbs[j].Date <= atoi(TabCom[2])) {
-                            tabsabs[NonJustif][idabsnonjustif] = j;
-                            idabsnonjustif++;
+                        if (Tabetu[i].Id == TabAbs[j].IdEtudiant
+                            && Tabetu[i].Id == atoi(TabCom[1])) {
+                            idetudiants = i;
+                            if (TabAbs[j].Etat == Justif
+                                && TabAbs[j].Justifier == OK
+                                && TabAbs[j].DateJustif <= atoi(TabCom[2])
+                                && TabAbs[j].DateJustif != 0
+                                && TabAbs[j].Date <= atoi(TabCom[2])) {
+                                tabsabs[Justif][idabsjustif] = j;
+                                idabsjustif++;
+                            } else if (TabAbs[j].Etat == EnAttenteTraitement
+                                       && TabAbs[j].DateJustif <= atoi(TabCom[2])
+                                       && TabAbs[j].DateJustif != 0
+                                       && TabAbs[j].Date <= atoi(TabCom[2])) {
+                                tabsabs[EnAttenteTraitement][idabsatttrait] = j;
+                                idabsatttrait++;
+                            } else if (TabAbs[j].Date + NBJourJustifMax >= atoi(TabCom[2])
+                                       && (TabAbs[j].DateJustif > atoi(TabCom[2])
+                                           || TabAbs[j].DateJustif == 0)
+                                       && TabAbs[j].Date <= atoi(TabCom[2])) {
+                                tabsabs[EnAttenteJustif][idabsattjustif] = j;
+                                idabsattjustif++;
+                            } else if ((TabAbs[j].Etat == NonJustif
+                                        || TabAbs[j].Date + NBJourJustifMax < atoi(TabCom[2])
+                                        || TabAbs[j].Justifier == KO)
+                                       && TabAbs[j].Date <= atoi(TabCom[2])) {
+                                tabsabs[NonJustif][idabsnonjustif] = j;
+                                idabsnonjustif++;
+                            }
                         }
-                    }
                 }
             }
             int NbAbs_jour = idabsattjustif + idabsatttrait + idabsjustif + idabsnonjustif;
@@ -321,9 +336,11 @@ void situ_etudiant(const ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[N
 }
 
 
-void defaillant(ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[NBMaxAbsence],
-                const unsigned int IDEtudiants,
-                const unsigned int IDAbsence, const char TabCom[][TailleMaxCommande]) {
+void defaillant(const char TabCom[][TailleMaxCommande],
+                const ETUDIANTS Tabetu[NBEtudiantMax],
+                unsigned int IDEtudiants,
+                const ABSENCE TabAbs[NBMaxAbsence],
+                unsigned int IDAbsence) {
     qsort(Tabetu, IDEtudiants, sizeof(ETUDIANTS), comparer_etu_groupe);
     if (atoi(TabCom[1]) >= 1) {
         unsigned etu_defaillant[NBEtudiantMax], incr_etu_defaillant = 0;
@@ -365,12 +382,5 @@ void defaillant(ETUDIANTS Tabetu[NBEtudiantMax], const ABSENCE TabAbs[NBMaxAbsen
         }
     } else {
         printf("Date incorrecte\n");
-    }
-}
-
-
-void affetu(ETUDIANTS Tabetu[NBEtudiantMax],const unsigned int IDEtudiants) {
-    for (int i =0; i < IDEtudiants-1; i++) {
-        printf("(%u) %d\n", Tabetu[i].Id, i);
     }
 }
