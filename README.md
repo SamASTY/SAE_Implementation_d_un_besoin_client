@@ -1,4 +1,4 @@
-# 🎓 Projet académique – Jeu OctoVerso en C
+# 🎓 Projet académique – Gestion des absences en C
 🗓️ 2024 - Projet de première année de BUT Informatique
 
 ---
