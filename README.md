@@ -5,7 +5,7 @@
 
 ## 🎯 Objectif du projet
 
-Développer une application en **langage C** permettant de **gérer les absences** d’étudiants d’un BUT en ** ligne de commande**.
+Développer une application en **langage C** permettant de **gérer les absences** d’étudiants d’un BUT en **ligne de commande**.
 
 L'application permet :
 - 🧑‍💻 L’inscription d’étudiants
